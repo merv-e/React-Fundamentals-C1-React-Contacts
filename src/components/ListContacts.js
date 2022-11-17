@@ -4,9 +4,15 @@ import { useState } from 'react'
 
 const ListContacts = ({ contacts, onDeleteContact }) => {
   const [query, setQuery] = useState("");
+
   const updateQuery = (query) => {
    setQuery(query.trim()); // burada trim bastaki ve sondaki bosluklari cikariyor, ana verimizi degistirmiyor!
   };
+
+  const clearQuery = () => {
+    updateQuery("");
+  };
+
   const showContacts =   
     query === "" 
     ? contacts 
@@ -17,6 +23,13 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
       <div className='list-contacts-top'>
         <input className='search-contacts' type="text" placeholder='Search Contacts' value={query} onChange={(e) => updateQuery(e.target.value)}  />
       </div>
+        { 
+        showContacts.length !== contacts.length && (
+        <div className='showing-contacts'>
+          <span>`Now showing {showContacts.length} of {contacts.length}` </span>
+          <button onClick={clearQuery}> Show all</button>
+        </div>
+       )}
     <ol className='contact-list'>
     {console.log(showContacts)}
         {showContacts.map((person) => ( 
