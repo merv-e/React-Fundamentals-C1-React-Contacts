@@ -1,11 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 
+const ListContacts = ({ contacts, onDeleteContact }) => {
+  const [query, setQuery] = useState("");
+  const updateQuery = (query) => {
+   setQuery(query.trim()); // burada trim bastaki ve sondaki bosluklari cikariyor, ana verimizi degistirmiyor!
+  };
+  const showContacts =   
+    query === "" 
+    ? contacts 
+    : contacts.filter((contact) => contact.name.toLowerCase().includes(query.toLowerCase()));
 
-function ListContacts({ contacts, onDeleteContact }) {
   return (
+    <div className='list-contacts'>
+      <div className='list-contacts-top'>
+        <input className='search-contacts' type="text" placeholder='Search Contacts' value={query} onChange={(e) => updateQuery(e.target.value)}  />
+      </div>
     <ol className='contact-list'>
-        {contacts.map((person) => ( 
+    {console.log(showContacts)}
+        {showContacts.map((person) => ( 
           <li key={person.id} className="contact-list-item">
             <div 
                 className='contact-avatar' 
@@ -19,6 +33,7 @@ function ListContacts({ contacts, onDeleteContact }) {
             <button className='contact-remove' onClick={() => onDeleteContact(person)}>Remove</button>
           </li>))} 
     </ol> 
+    </div>
   )
 }
 
