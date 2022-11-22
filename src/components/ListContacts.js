@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-const ListContacts = ({ contacts, onDeleteContact }) => {
+const ListContacts = ({ contacts, onDeleteContact, onNavigate }) => {
   const [query, setQuery] = useState("");
 
   const updateQuery = (query) => {
@@ -22,6 +22,7 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
     <div className='list-contacts'>
       <div className='list-contacts-top'>
         <input className='search-contacts' type="text" placeholder='Search Contacts' value={query} onChange={(e) => updateQuery(e.target.value)}  />
+        <a href="#create" onClick={onNavigate} className='add-contact'>Add Contact</a>
       </div>
         { 
         showContacts.length !== contacts.length && (
@@ -31,7 +32,6 @@ const ListContacts = ({ contacts, onDeleteContact }) => {
         </div>
        )}
     <ol className='contact-list'>
-    {console.log(showContacts)}
         {showContacts.map((person) => ( 
           <li key={person.id} className="contact-list-item">
             <div 
